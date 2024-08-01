@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('absens', function (Blueprint $table) {
             $table->id();
+            $table->date('tanggal');
             $table->foreignId('karyawan_id')->constrained();
-            $table->foreignId('shift_id')->constrained();
             $table->timestamp('jam_masuk')->nullable();
             $table->timestamp('jam_pulang')->nullable();
             $table->timestamp('jam_istirahat')->nullable();
@@ -31,6 +31,7 @@ return new class extends Migration
             $table->float('jumlah_menit_istirahat_terlambat')->nullable();
             $table->float('jumlah_menit_pulang_lebih_awal')->nullable();
             $table->float('jumlah_menit_pulang_terlambat')->nullable();
+            $table->boolean('selesai')->default(0);
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });
