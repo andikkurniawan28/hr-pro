@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Konfigurasi extends Model
 {
     use HasFactory;
+
+    protected $guarded = [];
+
+    public static function setel()
+    {
+        $konfigurasi = self::get()->last();
+        return $konfigurasi;
+    }
 }

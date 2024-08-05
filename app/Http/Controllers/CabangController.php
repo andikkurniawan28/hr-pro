@@ -4,15 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Models\Cabang;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 
 class CabangController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        if ($request->ajax()) {
+            return self::dataTable();
+        }
+        return view('cabang.index');
     }
 
     /**
@@ -20,7 +24,7 @@ class CabangController extends Controller
      */
     public function create()
     {
-        //
+        return view('cabang.create');
     }
 
     /**
@@ -28,7 +32,14 @@ class CabangController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'nama' => 'required|string|max:255|unique:cabangs',
+        ]);
+
+        $cabang = Cabang::create($validatedData);
+
+        return redirect()->route('cabang.index')
+            ->with('success', 'Cabang berhasil ditambahkan.');
     }
 
     /**
@@ -36,7 +47,7 @@ class CabangController extends Controller
      */
     public function show(Cabang $cabang)
     {
-        //
+        return view('cabang.show', compact('cabang'));
     }
 
     /**
@@ -44,7 +55,7 @@ class CabangController extends Controller
      */
     public function edit(Cabang $cabang)
     {
-        //
+        return view('cabang.edit', compact('cabang'));
     }
 
     /**
@@ -52,7 +63,14 @@ class CabangController extends Controller
      */
     public function update(Request $request, Cabang $cabang)
     {
-        //
+        $validatedData = $request->validate([
+            'nama' => 'required|string|max:255|unique:cabangs,nama,' . $cabang->id,
+        ]);
+
+        $cabang->update($validatedData);
+
+        return redirect()->route('cabang.index')
+            ->with('success', 'Cabang berhasil diperbarui.');
     }
 
     /**
@@ -60,6 +78,27 @@ class CabangController extends Controller
      */
     public function destroy(Cabang $cabang)
     {
-        //
+        $cabang->delete();
+
+        return redirect()->route('cabang.index')
+            ->with('success', 'Cabang berhasil dihapus.');
+    }
+
+    public static function dataTable()
+    {
+        $data = Cabang::get();
+        return Datatables::of($data)
+            ->addIndexColumn()
+            ->addColumn('tindakan', function ($row) {
+                $editUrl = route('cabang.edit', $row->id);
+                return '
+                    <div class="btn-group" role="group" aria-label="Action Buttons">
+                        <a href="' . $editUrl . '" class="btn btn-secondary btn-sm">Edit</a>
+                        <button class="btn btn-danger btn-sm delete-btn" data-id="' . $row->id . '" data-nama="' . $row->nama . '">Hapus</button>
+                    </div>
+                ';
+            })
+            ->rawColumns(['tindakan'])
+            ->make(true);
     }
 }

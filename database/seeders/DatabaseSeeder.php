@@ -9,9 +9,11 @@ use App\Models\Level;
 use App\Models\Shift;
 use App\Models\Cabang;
 use App\Models\Divisi;
+use App\Models\Jabatan;
 use App\Models\Jurusan;
 use App\Models\Sekolah;
 use App\Models\Golongan;
+use App\Models\Karyawan;
 use App\Models\Keahlian;
 use App\Models\SubDivisi;
 use App\Models\Pendidikan;
@@ -270,6 +272,10 @@ class DatabaseSeeder extends Seeder
             ["nama" => "Pagi", "jam_masuk" => "05:00", "jam_pulang" => "13:00", "jam_istirahat" => null, "jam_kembali_setelah_istirahat" => null],
             ["nama" => "Sore", "jam_masuk" => "13:00", "jam_pulang" => "21:00", "jam_istirahat" => null, "jam_kembali_setelah_istirahat" => null],
             ["nama" => "Malam", "jam_masuk" => "21:00", "jam_pulang" => "05:00", "jam_istirahat" => null, "jam_kembali_setelah_istirahat" => null],
+        ]);
+
+        Jabatan::insert([
+            ["nama" => "Manajemen IT & Analis Harian", "sub_divisi_id" => 31, "level_id" => 9],
         ]);
     }
 }

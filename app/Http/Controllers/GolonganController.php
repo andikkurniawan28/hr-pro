@@ -4,15 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Models\Golongan;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 
 class GolonganController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        if ($request->ajax()) {
+            return self::dataTable();
+        }
+        return view('golongan.index');
     }
 
     /**
@@ -20,7 +24,7 @@ class GolonganController extends Controller
      */
     public function create()
     {
-        //
+        return view('golongan.create');
     }
 
     /**
@@ -28,7 +32,14 @@ class GolonganController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'nama' => 'required|string|max:255|unique:golongans',
+        ]);
+
+        $golongan = Golongan::create($validatedData);
+
+        return redirect()->route('golongan.index')
+            ->with('success', 'Golongan berhasil ditambahkan.');
     }
 
     /**
@@ -36,7 +47,7 @@ class GolonganController extends Controller
      */
     public function show(Golongan $golongan)
     {
-        //
+        return view('golongan.show', compact('golongan'));
     }
 
     /**
@@ -44,7 +55,7 @@ class GolonganController extends Controller
      */
     public function edit(Golongan $golongan)
     {
-        //
+        return view('golongan.edit', compact('golongan'));
     }
 
     /**
@@ -52,7 +63,14 @@ class GolonganController extends Controller
      */
     public function update(Request $request, Golongan $golongan)
     {
-        //
+        $validatedData = $request->validate([
+            'nama' => 'required|string|max:255|unique:golongans,nama,' . $golongan->id,
+        ]);
+
+        $golongan->update($validatedData);
+
+        return redirect()->route('golongan.index')
+            ->with('success', 'Golongan berhasil diperbarui.');
     }
 
     /**
@@ -60,6 +78,27 @@ class GolonganController extends Controller
      */
     public function destroy(Golongan $golongan)
     {
-        //
+        $golongan->delete();
+
+        return redirect()->route('golongan.index')
+            ->with('success', 'Golongan berhasil dihapus.');
+    }
+
+    public static function dataTable()
+    {
+        $data = Golongan::get();
+        return Datatables::of($data)
+            ->addIndexColumn()
+            ->addColumn('tindakan', function ($row) {
+                $editUrl = route('golongan.edit', $row->id);
+                return '
+                    <div class="btn-group" role="group" aria-label="Action Buttons">
+                        <a href="' . $editUrl . '" class="btn btn-secondary btn-sm">Edit</a>
+                        <button class="btn btn-danger btn-sm delete-btn" data-id="' . $row->id . '" data-nama="' . $row->nama . '">Hapus</button>
+                    </div>
+                ';
+            })
+            ->rawColumns(['tindakan'])
+            ->make(true);
     }
 }
