@@ -23,3 +23,7 @@
 
 <!-- Datatables -->
 <link href="https://cdn.datatables.net/2.1.3/css/dataTables.dataTables.css" rel="stylesheet">
+
+<!-- Select2 CSS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2-bootstrap4-theme/1.2.2/select2-bootstrap4.min.css" rel="stylesheet" />
