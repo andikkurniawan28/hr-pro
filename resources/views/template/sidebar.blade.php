@@ -36,6 +36,10 @@
                 <a class="collapse-item" href="{{ route('level.index') }}">{{ ucReplaceUnderscoreToSpace('level') }}</a>
                 <a class="collapse-item" href="{{ route('golongan.index') }}">{{ ucReplaceUnderscoreToSpace('golongan') }}</a>
                 <a class="collapse-item" href="{{ route('pendidikan.index') }}">{{ ucReplaceUnderscoreToSpace('pendidikan') }}</a>
+                <a class="collapse-item" href="{{ route('jurusan.index') }}">{{ ucReplaceUnderscoreToSpace('jurusan') }}</a>
+                <a class="collapse-item" href="{{ route('keahlian.index') }}">{{ ucReplaceUnderscoreToSpace('keahlian') }}</a>
+                <a class="collapse-item" href="{{ route('agama.index') }}">{{ ucReplaceUnderscoreToSpace('agama') }}</a>
+                <a class="collapse-item" href="{{ route('bank.index') }}">{{ ucReplaceUnderscoreToSpace('bank') }}</a>
             </div>
         </div>
     </li>

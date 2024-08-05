@@ -1,10 +1,15 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BankController;
+use App\Http\Controllers\AgamaController;
 use App\Http\Controllers\LevelController;
 use App\Http\Controllers\CabangController;
 use App\Http\Controllers\DivisiController;
+use App\Http\Controllers\JurusanController;
+use App\Http\Controllers\SekolahController;
 use App\Http\Controllers\GolonganController;
+use App\Http\Controllers\KeahlianController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PendidikanController;
 
@@ -25,3 +30,8 @@ Route::resource('/divisi', DivisiController::class);
 Route::resource('/level', LevelController::class);
 Route::resource('/golongan', GolonganController::class);
 Route::resource('/pendidikan', PendidikanController::class);
+Route::resource('/sekolah', SekolahController::class);
+Route::resource('/jurusan', JurusanController::class);
+Route::resource('/keahlian', KeahlianController::class);
+Route::resource('/agama', AgamaController::class);
+Route::resource('/bank', BankController::class);
